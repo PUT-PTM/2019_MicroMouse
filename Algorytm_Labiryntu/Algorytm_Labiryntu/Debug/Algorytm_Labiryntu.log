@@ -1,0 +1,5 @@
+﻿  Source.cpp
+c:\users\hiborei\source\repos\algorytm_labiryntu\algorytm_labiryntu\source.cpp(77): warning C4018: '<': signed/unsigned mismatch
+c:\users\hiborei\source\repos\algorytm_labiryntu\algorytm_labiryntu\source.cpp(89): warning C4018: '<': signed/unsigned mismatch
+c:\users\hiborei\source\repos\algorytm_labiryntu\algorytm_labiryntu\source.cpp(99): warning C4018: '<': signed/unsigned mismatch
+  Algorytm_Labiryntu.vcxproj -> C:\Users\Hiborei\source\repos\Algorytm_Labiryntu\Debug\Algorytm_Labiryntu.exe
