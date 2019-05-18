@@ -47,6 +47,14 @@ TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
+volatile int rozkaz = 0;
+//0 - prosto
+//1 - lewo
+//2 - prawo
+//3 - obrot
+
+volatile int licznik = 0;
+//
 volatile int znacznik = 0;
 volatile int koniec = 2;
 //
@@ -80,11 +88,66 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	{
 		clocks++;
 	}
+	if(htim->Instance == TIM3)
+	{
+		znacznik++;
+		if(znacznik == 3)
+			znacznik = 0;
+	}
 }
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void lewo()
+{
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_14,GPIO_PIN_SET);
+	TIM4->CCR1 = 1899;
+	TIM4->CCR2 = 1999;
+	HAL_Delay(415);
+	rozkaz = 1;
+	licznik++;
+}
+
+void prawo()
+{
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_15,GPIO_PIN_SET);
+	TIM4->CCR1 = 1899;
+	TIM4->CCR2 = 1999;
+	HAL_Delay(415);
+	rozkaz = 2;
+	licznik++;
+}
+
+void obrot()
+{
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_14,GPIO_PIN_SET);
+	TIM4->CCR1 = 1899;
+	TIM4->CCR2 = 1999;
+	HAL_Delay(830);
+	rozkaz = 3;
+	licznik++;
+}
+
+
+void przod()
+{
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_15,GPIO_PIN_SET);
+	TIM4->CCR1 = 1899;
+	TIM4->CCR2 = 1999;
+	rozkaz = 0;
+	licznik++;
+
+}
+
 void sciana()
 {
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
@@ -165,65 +228,89 @@ int main(void)
 			}
 		}
 
-			// implementacja czujnika przedniego
+		// implementacja czujnika przedniego
+		if(znacznik == 0)
 			echof = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2);
-			if (echof == 1 && tempf1 == 0)
-			{
-				tempf1 = 1;
-				tempf2 = clocks;
+		if (echof == 1 && tempf1 == 0)
+		{
+			tempf1 = 1;
+			tempf2 = clocks;
 
-			}
-			if (echof == 0 && tempf1 == 1)
-			{
-				tempf1 = 0;
-				distancef = (clocks - tempf2)*34/200;
-				if (distancef >200) distancef = 201;
-				if (distancef <2) distancef = 1;
+		}
+		if (echof == 0 && tempf1 == 1)
+		{
+			tempf1 = 0;
+			distancef = (clocks - tempf2)*34/200;
+			if (distancef >200) distancef = 201;
+			if (distancef <2) distancef = 1;
 
-			}
-			// implementacja czujnika lewego
+		}
+		// implementacja czujnika lewego
+		if(znacznik == 1)
 			echol = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3);
-			if (echol == 1 && templ1 == 0)
-			{
-				templ1 = 1;
-				templ2 = clocks;
+		if (echol == 1 && templ1 == 0)
+		{
+			templ1 = 1;
+			templ2 = clocks;
 
-			}
-			if (echol == 0 && templ1 == 1)
-			{
-				templ1 = 0;
-				distancel = (clocks - templ2)*34/200;
-				if (distancel >200) distancel = 201;
-				if (distancel<2) distancel = 1;
+		}
+		if (echol == 0 && templ1 == 1)
+		{
+			templ1 = 0;
+			distancel = (clocks - templ2)*34/200;
+			if (distancel >200) distancel = 201;
+			if (distancel<2) distancel = 1;
 
-			}
-			// implementacja czujnika prawego
+		}
+		// implementacja czujnika prawego
+		if(znacznik == 2)
 			echor = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_8);
-			if (echor == 1 && tempr1 == 0)
-			{
-				tempr1 = 1;
-				tempr2 = clocks;
+		if (echor == 1 && tempr1 == 0)
+		{
+			tempr1 = 1;
+			tempr2 = clocks;
 
-			}
-			if (echor == 0 && tempr1 == 1)
-			{
-				tempr1 = 0;
-				distancer = (clocks - tempr2)*34/200;
-				if (distancer >200) distancer = 201;
-				if (distancer <2) distancer = 1;
+		}
+		if (echor == 0 && tempr1 == 1)
+		{
+			tempr1 = 0;
+			distancer = (clocks - tempr2)*34/200;
+			if (distancer >200) distancer = 201;
+			if (distancer <2) distancer = 1;
 
-			}
+		}
+		// bez przeszkod
+		if(koniec == 0 && distancef >= 25 && clocks > 10000 && rozkaz !=0)
+		{
+			przod();
+		}
+		//blisko œciany
+		if(koniec == 0 && distancef < 25 && clocks >10000)
+		{
+			TIM4->CCR1 = 1899;
+			TIM4->CCR2 = 1999;
+		}
 
-			if(koniec == 0 && distancef < 10 && clocks > 10000)
-			{
-				sciana();
-			}
+		if(koniec == 0 && distancef < 25 && clocks >10000)
+		{
+			TIM4->CCR1 = 1424;
+			TIM4->CCR2 = 1499;
+		}
+		//œciana z przdu
+		if(koniec == 0 && distancef < 15 && clocks > 10000)
+		{
+			if(distancer > 30 && distancel > 30 && rozkaz !=2)
+				prawo();
+			if(distancer < 30 && distancel > 30 && rozkaz !=1)
+				lewo();
+			if(distancer > 30 && distancel < 30 && rozkaz !=2)
+				prawo();
+			if(distancer < 30 && distancel < 30 && rozkaz !=3)
+				obrot();
 
-			if(koniec == 0 && distancef < 25 && clocks >10000)
-			{
-				TIM4->CCR1 = 1424;
-				TIM4->CCR2 = 1499;
-			}
+		}
+
+
 
 		// implementacja ruchu kó³
 
