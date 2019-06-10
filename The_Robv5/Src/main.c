@@ -52,7 +52,8 @@ volatile int rozkaz = 0;
 //1 - lewo
 //2 - prawo
 //3 - obrot
-
+volatile int pwma = 0;
+volatile int pwmb = 0;
 volatile int licznik = 0;
 //
 volatile int znacznik = 0;
@@ -104,9 +105,9 @@ void lewo()
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
 	HAL_Delay(500);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_14,GPIO_PIN_SET);
-	TIM4->CCR1 = 1899;
+	TIM4->CCR1 = 1999;
 	TIM4->CCR2 = 1999;
-	HAL_Delay(415);
+	HAL_Delay(400);
 	rozkaz = 1;
 	licznik++;
 }
@@ -116,9 +117,9 @@ void prawo()
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
 	HAL_Delay(500);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_15,GPIO_PIN_SET);
-	TIM4->CCR1 = 1899;
+	TIM4->CCR1 = 1999;
 	TIM4->CCR2 = 1999;
-	HAL_Delay(415);
+	HAL_Delay(400);
 	rozkaz = 2;
 	licznik++;
 }
@@ -128,9 +129,9 @@ void obrot()
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
 	HAL_Delay(500);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_14,GPIO_PIN_SET);
-	TIM4->CCR1 = 1899;
+	TIM4->CCR1 = 1999;
 	TIM4->CCR2 = 1999;
-	HAL_Delay(830);
+	HAL_Delay(800);
 	rozkaz = 3;
 	licznik++;
 }
@@ -141,8 +142,8 @@ void przod()
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15, GPIO_PIN_RESET);
 	HAL_Delay(500);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_15,GPIO_PIN_SET);
-	TIM4->CCR1 = 1899;
-	TIM4->CCR2 = 1999;
+	TIM4->CCR1 = 999; // prawe 1729
+	TIM4->CCR2 = 999; // lewe 1999
 	rozkaz = 0;
 	licznik++;
 
@@ -154,8 +155,8 @@ void sciana()
 	koniec = 1;
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_14,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13 | GPIO_PIN_15,GPIO_PIN_RESET);
-	TIM4->CCR1 = 1899;
-	TIM4->CCR2 = 1999;
+	TIM4->CCR1 = 999;
+	TIM4->CCR2 = 999;
 }
 
 
@@ -198,8 +199,8 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET);
-	TIM4->CCR1 = 1899; // prawe 1729
-	TIM4->CCR2 = 1999; // lewe 1999
+	TIM4->CCR1 = 999; // prawe 1729
+	TIM4->CCR2 = 999; // lewe 1999
 	//
 	HAL_TIM_Base_Start_IT(&htim2);
 	HAL_TIM_Base_Start_IT(&htim3);
@@ -215,6 +216,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
+		pwma = TIM4->CCR1;
+		pwmb = TIM4->CCR2;
 		value = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
 		if(temp == 0)
 		{
