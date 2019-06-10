@@ -1,6 +1,6 @@
 # 2019_MicroMouse
 
-# Robot, znajdujący czarny obszar na wyznaczonym dla niego białym obszarze
+# Robot, znajdujący czarne pole na wyznaczonym dla niego białym obszarze
 
 Projekt powstał, by z wykorzystaniem miktokontrolera STM32F407VG DISCOVERY, czujników odległości oraz pary silników autonomicznie poruszający się pojazd samodzielnie dojechał do wyznaczonego celu.
 Robot zasilany jest dwoma akumulatorami 3.6V, co daje napięcie 7.2V dla silników, oraz 5V dla mikrokontrolera i urządzeń peryferyjnych dzięki zastosowaniu stabilizatora napięcia.
@@ -27,7 +27,7 @@ Kod, który napisaliśmy składa się z czterech elementów:
 
 # Kompilacja i uruchomienie projektu:
 - 1. W przypadku niedostatecznego zasilania wymiana wyładowanych akumulatorów ze spodu robota,
-- 2. Podłączenie wszystkich pinów do mikrokontrolera zgodnie ze schematem zawartym w pliku The_Final_Rob/The_Final_Rob.ioc,
+- 2. Podłączenie wszystkich pinów do mikrokontrolera zgodnie ze schematem zawartym w pliku "The_Final_Rob/The_Final_Rob.ioc",
 - 3. Umieszczenie czarnego obszaru w przygotowanej do tego celu białej arenie,
 - 4. Umieszczenie robota na arenie w dowolnym miejscu,
 - 5. Zresetowanie robota za pomocą czarnego i uruchomienie za pomocą niebieskiego przycisku na płytce,
