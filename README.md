@@ -8,10 +8,10 @@ Robot zasilany jest dwoma akumulatorami 3.6V, co daje napięcie 7.2V dla silnik�
 # Budowa Robota
 Szkielet urządzenia został zapożyczony z innego robota, który zaopatrzony był w dwa sprawne koła, a jego budowa pozwalała na obrót w miejscu.
 Silniki, które zamontowaliśmy obsługujemy za pomocą mostku H oraz sygnałów PWM z mikrokontrolera, dzięki czemu robot może jechać do przodu, do tyłu oraz skręcać w miejscu i w ruchu.
-Dzięki trzem czujnikom odległości robot jest świadom dystansu do ściany przed nim, oraz do dwóch bocznych, a czunik światła, zlokalizowany na spodzie dostarcza mu informacji o ilości światła zaabsorbowanego przez podłogę.
-Ta funkcjonalność, wraz z podstawowym algorytmem przeszukiwania danego obszaru pozwoliła na stworzenie maszyny, która zatrzyma się na polu, któro jest czarne.
+Dzięki trzem czujnikom odległości robot jest świadom dystansu do ściany przed nim, oraz do dwóch bocznych, a czujnik światła, zlokalizowany na spodzie dostarcza mu informacji o ilości światła zaabsorbowanego przez podłogę.
+Ta funkcjonalność, wraz z podstawowym algorytmem przeszukiwania danego obszaru pozwoliła na stworzenie maszyny, która zatrzyma się na polu, które jest czarne.
 
-# Wnętrze Miktokontrolera
+# Wnętrze Mikrokontrolera
 Elementy płytki, które wykorzystaliśmy, to oprócz kilku pinów wejścia/wyjścia trzy timery:
 - zwiększający daną zmienną co 10 mikrosekund, używaną do bardzo precyzyjnych pomiarów czasu sygnału na wejściu,
 - obsługujący sygnały wyzwalające do czujników o długości 10 mikrosekund, co 100 milisekund,
@@ -20,10 +20,10 @@ By czujnik światła poprawnie działał potrzebny był nam jeden przetwornik an
 
 # Wykorzystany Kod
 Kod, który napisaliśmy składa się z czterech elementów:
-- obsługi przerwać timerów,
+- obsługi przerwań timerów,
 - odczytu danych z czujników,
 - dostosowaniu ruchu robota do jego położenia w przestrzeni,
-- odczytu danych z czujnika światła i w przypadku dojechania do celu zatrzymanie robota
+- odczytu danych z czujnika światła i w przypadku dojechania do celu - zatrzymanie robota
 
 # Kompilacja i uruchomienie projektu:
 - 1. W przypadku niedostatecznego zasilania wymiana wyładowanych akumulatorów ze spodu robota,
@@ -42,7 +42,7 @@ Kod, który napisaliśmy składa się z czterech elementów:
 - analogowy czujnik światła DFRobot Gravity
 
 # Ulepszenia w przyszłości
-Zamontowanie w robocie silników z enkoderami tak, by był on w stanie prouszać się w linii prostej oraz zaimplementowanie w nim algorytmu, który znajduje najkrótszą trasę w labiryncie
+Zamontowanie w robocie silników z enkoderami tak, by był on w stanie poruszać się w linii prostej oraz zaimplementowanie w nim algorytmu, który znajduje najkrótszą trasę w labiryncie
 
 # Licencja
 MIT
