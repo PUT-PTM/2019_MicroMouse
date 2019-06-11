@@ -2,7 +2,7 @@
 
 # Robot, znajdujący czarne pole na wyznaczonym dla niego białym obszarze
 
-Projekt powstał, by z wykorzystaniem miktokontrolera STM32F407VG DISCOVERY, czujników odległości oraz pary silników autonomicznie poruszający się pojazd samodzielnie dojechał do wyznaczonego celu.
+Projekt powstał, by z wykorzystaniem mikrokontrolera STM32F407VG DISCOVERY, czujników odległości oraz pary silników, autonomicznie poruszający się pojazd samodzielnie dojechał do wyznaczonego celu.
 Robot zasilany jest dwoma akumulatorami 3.6V, co daje napięcie 7.2V dla silników, oraz 5V dla mikrokontrolera i urządzeń peryferyjnych dzięki zastosowaniu stabilizatora napięcia.
 
 # Budowa Robota
